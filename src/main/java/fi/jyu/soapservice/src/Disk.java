@@ -1,4 +1,4 @@
-
+package fi.jyu.soapservice.src;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @WebService(targetNamespace = "http://test")
 public class Disk {
-  private String csvFile = "../../../../resources/database.csv";
+  private String csvFile = "src/main/resources/database.csv";
   private String cvsSplitBy = ",";
 
   @WebMethod
@@ -81,9 +81,11 @@ public class Disk {
     return result;
   }
 
+
   public static void main(String[] args) {
     Object implementor = new Disk ();
     String address = "http://localhost:9000/";
     Endpoint.publish(address, implementor);
+
   }
 }
