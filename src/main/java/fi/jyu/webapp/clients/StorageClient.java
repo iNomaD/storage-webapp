@@ -12,11 +12,16 @@ public class StorageClient {
 
         DiskService disksService = new DiskService();
         Disk disk = disksService.getDiskPort();
-        System.out.println(disk.getDisks());
 
-
-        return("-1");
+        return disk.getDisks();
     }
 
+    public String GetHD(String i){
+
+        DiskService disksService = new DiskService();
+        Disk disk = disksService.getDiskPort();
+
+        return disk.getDiskbyId(i);
+    }
 
 }

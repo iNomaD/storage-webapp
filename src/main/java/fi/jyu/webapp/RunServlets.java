@@ -9,8 +9,8 @@ public class RunServlets {
         ServletHandler handler = new ServletHandler();
 
         //add all servlet to use to the handler, the second argument is the path (e.g. http://localhost:8080/searchPublication)
-        handler.addServletWithMapping(SearchDiskServlet.class, "/getDisks");
-        handler.addServletWithMapping(SearchDiskServlet.class, "/getDiskById");
+        handler.addServletWithMapping(SearchDiskServlet.class, "/Disks");
+        handler.addServletWithMapping(SearchDiskServlet.class, "/getDiskbyId");
 
 
         //Create a new Server, add the handler to it and start

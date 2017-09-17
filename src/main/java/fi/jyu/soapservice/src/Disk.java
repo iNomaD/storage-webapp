@@ -42,8 +42,12 @@ public class Disk {
         }
       }
     }
+    if (result == "<NewDataSet>"){
+      return "<NewDataSet> No Information </NewDataSet>";
+    }
+    else{
     result = result + "</NewDataSet>";
-    return result;
+    return result;}
   }
 
   @WebMethod
@@ -77,8 +81,12 @@ public class Disk {
         }
       }
     }
-    result = result + "</NewDataSet>";
-    return result;
+    if (result == "<NewDataSet>"){
+      return "<NewDataSet> No Information </NewDataSet>";
+    }
+    else{
+      result = result + "</NewDataSet>";
+      return result;}
   }
 
 
