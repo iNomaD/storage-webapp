@@ -91,6 +91,7 @@ public class Disk {
     Object implementor = new Disk ();
     String address = "http://localhost:9000/";
     Endpoint.publish(address, implementor);
+    System.out.println("Launched!");
 
   }
 }
