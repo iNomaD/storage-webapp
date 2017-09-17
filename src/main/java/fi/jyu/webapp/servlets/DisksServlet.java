@@ -67,7 +67,7 @@ public class DisksServlet extends HttpServlet {
             double temppr = Double.valueOf(hdTag.getElementsByTagName("Price").item(0).getTextContent())*currency;
             PriceEUR.setTextContent(String.valueOf(temppr));
             hdTag.appendChild(PriceEUR);
-            double tempcap = Double.valueOf(hdTag.getElementsByTagName("Capacity").item(0).getTextContent())*currency;
+            double tempcap = Double.valueOf(hdTag.getElementsByTagName("Capacity").item(0).getTextContent())*gbtomb;
             CapMB.setTextContent(String.valueOf(tempcap));
             hdTag.appendChild(CapMB);
         }
