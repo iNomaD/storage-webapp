@@ -29,8 +29,6 @@ public class Disk {
 
       }
 
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
@@ -42,7 +40,7 @@ public class Disk {
         }
       }
     }
-    if (result == "<NewDataSet>"){
+    if (result.equals("<NewDataSet>")){
       return "<NewDataSet> No Information </NewDataSet>";
     }
     else{
@@ -53,7 +51,7 @@ public class Disk {
   @WebMethod
   public String getDiskbyId(String id){
     BufferedReader br = null;
-    String line = "";
+    String line;
     String result = "<NewDataSet>";
     try {
 
@@ -62,14 +60,13 @@ public class Disk {
 
         // use comma as separator
         String[] hd = line.split(cvsSplitBy);
-        if(hd[0] == id) {
+
+        if(Integer.parseInt(hd[0]) == Integer.parseInt(id)) {
           result = result + ("<HD><ID>" + hd[0] + "</ID><Vendor>" + hd[1] + "</Vendor><Type>" + hd[2] + "</Type><Capacity" + hd[3] + "</Capacity><Rpm>" + hd[4] + "</Rpm><Price>" + hd[5] + "</Price></HD>");
           break;
         }
       }
 
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
@@ -81,7 +78,7 @@ public class Disk {
         }
       }
     }
-    if (result == "<NewDataSet>"){
+    if (result.equals("<NewDataSet>")){
       return "<NewDataSet> No Information </NewDataSet>";
     }
     else{

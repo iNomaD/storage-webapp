@@ -35,7 +35,7 @@ public class SearchDiskServlet extends HttpServlet {
         String id = request.getParameter("id");
         StorageClient storageClient = new StorageClient();
         String disk = storageClient.GetHD(id);
-        if (disk == "<NewDataSet> No Information </NewDataSet>"){
+        if (disk.equals("<NewDataSet> No Information </NewDataSet>")){
             PrintWriter out = response.getWriter();
             out.println(disk);
         }
@@ -45,9 +45,7 @@ public class SearchDiskServlet extends HttpServlet {
         double currency = 0;
         try{
             currency = cclient.sendRequest(1, "USD");}
-        catch (ParseException e) { e.printStackTrace();} catch (DatatypeConfigurationException e){
-            e.printStackTrace();
-        }
+        catch (ParseException | DatatypeConfigurationException e) { e.printStackTrace();}
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = null;
         try {
@@ -69,7 +67,7 @@ public class SearchDiskServlet extends HttpServlet {
             double temppr = Double.valueOf(hdTag.getElementsByTagName("Price").item(0).getTextContent())*currency;
             PriceEUR.setTextContent(String.valueOf(temppr));
             hdTag.appendChild(PriceEUR);
-            double tempcap = Double.valueOf(hdTag.getElementsByTagName("Capacity").item(0).getTextContent())*currency;
+            double tempcap = Double.valueOf(hdTag.getElementsByTagName("Capacity").item(0).getTextContent())*gbtomb;
             CapMB.setTextContent(String.valueOf(tempcap));
             hdTag.appendChild(CapMB);
         }
