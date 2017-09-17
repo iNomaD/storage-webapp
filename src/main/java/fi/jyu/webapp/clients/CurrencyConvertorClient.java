@@ -36,7 +36,7 @@ public class CurrencyConvertorClient {
 
         GregorianCalendar gregory = new GregorianCalendar();
         gregory.setTime(date);
-        gregory.add(GregorianCalendar.DATE,-1);
+        gregory.add(GregorianCalendar.DATE,-2);
         date = gregory.getTime();
 
 
