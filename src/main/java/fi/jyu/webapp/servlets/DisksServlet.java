@@ -1,5 +1,6 @@
 package fi.jyu.webapp.servlets;
 
+import fi.jyu.webapp.Processing;
 import fi.jyu.webapp.clients.CurrencyConvertorClient;
 import fi.jyu.webapp.clients.StorageClient;
 import fi.jyu.webapp.clients.UnitConvertorClient;
@@ -30,53 +31,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.text.ParseException;
-
 @WebServlet("/Disks")
 public class DisksServlet extends HttpServlet {
 
+    private Processing processing = new Processing();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        StorageClient storageClient = new StorageClient();
-        String disks = storageClient.GetList();
-        CurrencyConvertorClient cclient = new CurrencyConvertorClient();
-        UnitConvertorClient uclient = new UnitConvertorClient();
-        double gbtomb = uclient.sendRequest(1, "Gigabyte","Megabyte");
-        double currency = 0;
-        try{
-        currency = cclient.sendRequest(1, "USD");}
-        catch (ParseException | DatatypeConfigurationException e) { e.printStackTrace();}
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = null;
-        try {
-            db = dbf.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-        System.out.println(disks);
-        Document doc = null;
-        try {
-            doc = db.parse(new InputSource(new StringReader(disks)));
-            System.out.println(doc);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-        Element dataTag = doc.getDocumentElement();
-        for(int i=0;i<dataTag.getElementsByTagName("HD").getLength();i++){
-            Element hdTag = (Element) dataTag.getElementsByTagName("HD").item(i);
-            Element PriceEUR = doc.createElement("PriceEUR");
-            Element CapMB = doc.createElement("CapMB");
-            double temppr = Double.valueOf(hdTag.getElementsByTagName("Price").item(0).getTextContent())*currency;
-            PriceEUR.setTextContent(String.valueOf(temppr));
-            hdTag.appendChild(PriceEUR);
-            double tempcap = Double.valueOf(hdTag.getElementsByTagName("Capacity").item(0).getTextContent())*gbtomb;
-            CapMB.setTextContent(String.valueOf(tempcap));
-            hdTag.appendChild(CapMB);
-        }
-        DOMImplementationLS domImplementation = (DOMImplementationLS) doc.getImplementation();
-        LSSerializer lsSerializer = domImplementation.createLSSerializer();
-        String result = lsSerializer.writeToString(doc);
+        processing.getDisks();;
+        processing.getCurrency();
+        processing.getGBtoMB();
         PrintWriter out = response.getWriter();
-        out.println(result);
-        System.out.println(1);
+        out.println(processing.processXML());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
