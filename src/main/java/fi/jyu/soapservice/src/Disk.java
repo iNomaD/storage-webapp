@@ -25,7 +25,7 @@ public class Disk {
         // use comma as separator
         String[] hd = line.split(cvsSplitBy);
 
-        result = result + ("<HD><ID>" + hd[0] + "</ID><Vendor>" + hd[1] + "</Vendor><Type>" + hd[2] + "</Type><Capacity" + hd[3] + "</Capacity><Rpm>" + hd[4] + "</Rpm><Price>" + hd[5] +  "</Price></HD>");
+        result = result + ("<HD><ID>" + hd[0] + "</ID><Vendor>" + hd[1] + "</Vendor><Type>" + hd[2] + "</Type><Capacity>" + hd[3] + "</Capacity><Rpm>" + hd[4] + "</Rpm><Price>" + hd[5] +  "</Price></HD>");
 
       }
 
@@ -62,7 +62,7 @@ public class Disk {
         String[] hd = line.split(cvsSplitBy);
 
         if(Integer.parseInt(hd[0]) == Integer.parseInt(id)) {
-          result = result + ("<HD><ID>" + hd[0] + "</ID><Vendor>" + hd[1] + "</Vendor><Type>" + hd[2] + "</Type><Capacity" + hd[3] + "</Capacity><Rpm>" + hd[4] + "</Rpm><Price>" + hd[5] + "</Price></HD>");
+          result = result + ("<HD><ID>" + hd[0] + "</ID><Vendor>" + hd[1] + "</Vendor><Type>" + hd[2] + "</Type><Capacity>" + hd[3] + "</Capacity><Rpm>" + hd[4] + "</Rpm><Price>" + hd[5] + "</Price></HD>");
           break;
         }
       }

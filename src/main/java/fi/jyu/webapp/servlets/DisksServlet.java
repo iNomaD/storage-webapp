@@ -43,9 +43,7 @@ public class DisksServlet extends HttpServlet {
         double currency = 0;
         try{
         currency = cclient.sendRequest(1, "USD");}
-        catch (ParseException e) { e.printStackTrace();} catch (DatatypeConfigurationException e){
-            e.printStackTrace();
-        }
+        catch (ParseException | DatatypeConfigurationException e) { e.printStackTrace();}
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = null;
         try {
@@ -53,9 +51,11 @@ public class DisksServlet extends HttpServlet {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
+        System.out.println(disks);
         Document doc = null;
         try {
             doc = db.parse(new InputSource(new StringReader(disks)));
+            System.out.println(doc);
         } catch (SAXException e) {
             e.printStackTrace();
         }
@@ -76,6 +76,7 @@ public class DisksServlet extends HttpServlet {
         String result = lsSerializer.writeToString(doc);
         PrintWriter out = response.getWriter();
         out.println(result);
+        System.out.println(1);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
