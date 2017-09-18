@@ -67,7 +67,7 @@ public class DiskModel {
         disk.vendor = ((Element) nList.item(0)).getElementsByTagName("Vendor").item(0).getTextContent();
         disk.type = ((Element) nList.item(0)).getElementsByTagName("Type").item(0).getTextContent();
         disk.capacityUnits = ((Element) nList.item(0)).getElementsByTagName("CapacityUnits").item(0).getTextContent();
-        disk.priceUnits = ((Element) nList.item(0)).getElementsByTagName("priceUnits").item(0).getTextContent();
+        disk.priceUnits = ((Element) nList.item(0)).getElementsByTagName("PriceUnits").item(0).getTextContent();
         return disk;
     }
 

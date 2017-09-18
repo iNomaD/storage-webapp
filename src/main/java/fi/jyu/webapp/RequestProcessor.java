@@ -6,6 +6,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -41,7 +43,11 @@ public class RequestProcessor {
             NodeList nodeList = root.getElementsByTagName("HD");
             for(int i=0; i<nodeList.getLength(); ++i){
                 Node elementNode = nodeList.item(i);
-                String elementName = elementNode.getTextContent().trim();
+                DOMImplementationLS domImplementation = (DOMImplementationLS) doc.getImplementation();
+                LSSerializer lsSerializer = domImplementation.createLSSerializer();
+                String elementName = lsSerializer.writeToString(elementNode);
+                elementName = elementName.substring(40);
+                System.out.println(elementName);
                 result.add(DiskModel.fromXML(elementName));
             }
         }
