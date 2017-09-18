@@ -33,15 +33,19 @@ public class RequestProcessor {
     public static List<DiskModel> getStorageData(){
         List<DiskModel> result = new ArrayList<>();
         String xmlData = getXmlData();
+        System.out.println("XMLDAT  "+xmlData);
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = loadXMLFromString(xmlData);
             Element root = doc.getDocumentElement();
+            String rootText = root.getTextContent();
+            System.out.println(rootText);
             NodeList nodeList = root.getElementsByTagName("HD");
             for(int i=0; i<nodeList.getLength(); ++i){
                 Node elementNode = nodeList.item(i);
                 String elementName = elementNode.getTextContent().trim();
+                System.out.println("ELEMENTNAME "+elementName);
                 result.add(DiskModel.fromXML(elementName));
             }
         }
