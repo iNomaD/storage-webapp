@@ -31,39 +31,19 @@ public class OrderServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         System.out.println("doPost");
-
-        int DiskId = Integer.parseInt(request.getParameter("diskId").toString());
-        String CustumerNumber = request.getParameter("customerNumber").toString();
-        String CustomerEmail = request.getParameter("customerEmail").toString();
-
         PrintWriter OutResponse = response.getWriter();
 
-        String OutPut = "Custumer Id is " + String.valueOf(DiskId)+ '\n' + "Custumer Number is " + CustumerNumber + '\n' + "Custumer Email is " + CustomerEmail +'\n' ;
-        System.out.println(OutPut);
-
         try {
+            int DiskId = Integer.parseInt(request.getParameter("diskId").toString());
+            String CustumerNumber = request.getParameter("customerNumber").toString();
+            String CustomerEmail = request.getParameter("customerEmail").toString();
 
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = null;
+            String OutPut = "Custumer Id is " + String.valueOf(DiskId)+ '\n' + "Custumer Number is " + CustumerNumber + '\n' + "Custumer Email is " + CustomerEmail +'\n' ;
+            System.out.println(OutPut);
 
-            dBuilder = dbFactory.newDocumentBuilder();
+            String output = XMLBuilder("Pass");
 
-            Document doc = dBuilder.newDocument();
-            Element RootElement = doc.createElement("AnswerForm");
-            doc.appendChild(RootElement);
 
-            Element Answer = doc.createElement("Answer");
-            RootElement.appendChild(Answer);
-
-            Answer.appendChild(doc.createTextNode("passed"));
-
-            TransformerFactory tf = TransformerFactory.newInstance();
-
-            Transformer transformer = tf.newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            StringWriter writer = new StringWriter();
-            transformer.transform(new DOMSource(doc), new StreamResult(writer));
-            String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
             System.out.println(output);
             OutResponse.write(output);
 
@@ -75,10 +55,42 @@ public class OrderServlet extends HttpServlet {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            try {
+                OutResponse.write(XMLBuilder("Fill all parameters"));
+            } catch (ParserConfigurationException e1) {
+                e1.printStackTrace();
+            } catch (TransformerException e1) {
+                e1.printStackTrace();
+            }
         }
 
 
 
+    }
+
+    private String XMLBuilder(String Desition) throws ParserConfigurationException, TransformerException {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = null;
+
+        dBuilder = dbFactory.newDocumentBuilder();
+
+        Document doc = dBuilder.newDocument();
+        Element RootElement = doc.createElement("AnswerForm");
+        doc.appendChild(RootElement);
+
+        Element Answer = doc.createElement("Answer");
+        RootElement.appendChild(Answer);
+
+        Answer.appendChild(doc.createTextNode(Desition));
+
+        TransformerFactory tf = TransformerFactory.newInstance();
+
+        Transformer transformer = tf.newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        StringWriter writer = new StringWriter();
+        transformer.transform(new DOMSource(doc), new StreamResult(writer));
+        return writer.getBuffer().toString().replaceAll("\n|\r", "");
     }
 
 }
