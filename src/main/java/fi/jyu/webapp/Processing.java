@@ -1,5 +1,6 @@
 package fi.jyu.webapp;
 
+import fi.jyu.soapservice.src.models.DiskModel;
 import fi.jyu.webapp.clients.CurrencyConvertorClient;
 import fi.jyu.webapp.clients.StorageClient;
 import fi.jyu.webapp.clients.UnitConvertorClient;
@@ -19,13 +20,13 @@ import java.io.StringReader;
 import java.text.ParseException;
 
 public class Processing {
-    private String Disks;
+    private String xmlData;
     private double Currency;
     private double Gbtomb;
 
     public void getDisks(){
         StorageClient storageClient = new StorageClient();
-        Disks = storageClient.GetList();
+        xmlData = storageClient.GetList();
     }
     public void getCurrency(){
         CurrencyConvertorClient cclient = new CurrencyConvertorClient();
@@ -51,7 +52,7 @@ public class Processing {
         }
         Document doc = null;
         try {
-            doc = db.parse(new InputSource(new StringReader(Disks)));
+            doc = db.parse(new InputSource(new StringReader(xmlData)));
             System.out.println(doc);
         } catch (SAXException e) {
             e.printStackTrace();
@@ -77,7 +78,7 @@ public class Processing {
     }
     public String  getDiskByID(String i){
         StorageClient storageClient = new StorageClient();
-        Disks = storageClient.GetHD(i);
-        return Disks;
+        xmlData = storageClient.GetHD(i);
+        return xmlData;
     }
 }

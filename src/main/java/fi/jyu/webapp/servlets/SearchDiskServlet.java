@@ -1,5 +1,6 @@
 package fi.jyu.webapp.servlets;
 
+import fi.jyu.soapservice.src.models.Constants;
 import fi.jyu.webapp.Processing;
 import fi.jyu.webapp.clients.CurrencyConvertorClient;
 import fi.jyu.webapp.clients.StorageClient;
@@ -36,7 +37,7 @@ public class SearchDiskServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        if(processing.getDiskByID(request.getParameter("id")).equals("<NewDataSet> No Information </NewDataSet>")) {
+        if(processing.getDiskByID(request.getParameter("id")).equals("<NewDataSet>"+ Constants.NO_INFORMATION+"</NewDataSet>")) {
             response.setStatus(404);
         }
         else{

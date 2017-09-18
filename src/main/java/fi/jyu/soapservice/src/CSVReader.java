@@ -1,8 +1,13 @@
 package fi.jyu.soapservice.src;
 
+import fi.jyu.soapservice.src.models.Constants;
+import fi.jyu.soapservice.src.models.DiskModel;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 class CSVReader {
     private String csvFile = "src/main/resources/database.csv";
@@ -11,20 +16,22 @@ class CSVReader {
     public String CSVProcess(String id) {
         BufferedReader br = null;
         String line;
-        String result = "<NewDataSet>";
+
+        List<DiskModel> disks = new ArrayList<>();
         try {
 
             br = new BufferedReader(new FileReader(csvFile));
+
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
                 String[] hd = line.split(cvsSplitBy);
 
-                if (((Integer.parseInt(hd[0]) == Integer.parseInt(id)))) {
-                    result = result + ("<HD><ID>" + hd[0] + "</ID><Vendor>" + hd[1] + "</Vendor><Type>" + hd[2] + "</Type><Capacity>" + hd[3] + "</Capacity><Rpm>" + hd[4] + "</Rpm><Price>" + hd[5] + "</Price></HD>");
-                    break;
-                } else if (Integer.parseInt(id) <= -1) {
-                    result = result + ("<HD><ID>" + hd[0] + "</ID><Vendor>" + hd[1] + "</Vendor><Type>" + hd[2] + "</Type><Capacity>" + hd[3] + "</Capacity><Rpm>" + hd[4] + "</Rpm><Price>" + hd[5] + "</Price></HD>");
+                if ((Integer.parseInt(hd[0]) == Integer.parseInt(id)) || (Integer.parseInt(id) <= -1)) {
+                    disks.add(new DiskModel(Integer.valueOf(hd[0]), hd[1], hd[2], Integer.valueOf(hd[3]), Constants.capacityGB, Integer.valueOf(hd[4]), Integer.valueOf(hd[5]), Constants.priceUSD));
+                    if(Integer.parseInt(id) > -1) {
+                        break;
+                    }
                 }
             }
 
@@ -39,9 +46,14 @@ class CSVReader {
                 }
             }
         }
-        if (result.equals("<NewDataSet>")) {
-            return "<NewDataSet> No Information </NewDataSet>";
+
+        if (disks.isEmpty()) {
+            return "<NewDataSet>"+Constants.NO_INFORMATION+"</NewDataSet>";
         } else {
+            String result = "<NewDataSet>";
+            for(DiskModel disk : disks){
+                result += disk.toXML();
+            }
             result = result + "</NewDataSet>";
             return result;
         }
