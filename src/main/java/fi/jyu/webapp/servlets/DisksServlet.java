@@ -27,6 +27,9 @@ public class DisksServlet extends HttpServlet {
         */
 
         List<DiskModel> data = RequestProcessor.getStorageData();
+        for(DiskModel disk : data){
+            System.out.println(disk);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

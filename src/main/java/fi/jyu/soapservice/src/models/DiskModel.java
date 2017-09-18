@@ -43,6 +43,8 @@ public class DiskModel {
     }
 
     public static DiskModel fromXML(String xmlData){
+        System.out.println("DATA  "+xmlData);
+
         DiskModel disk = new DiskModel();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = null;
@@ -133,5 +135,19 @@ public class DiskModel {
 
     public void setPriceUnits(String priceUnits) {
         this.priceUnits = priceUnits;
+    }
+
+    @Override
+    public String toString() {
+        return "DiskModel{" +
+                "id=" + id +
+                ", vendor='" + vendor + '\'' +
+                ", type='" + type + '\'' +
+                ", capacity=" + capacity +
+                ", capacityUnits='" + capacityUnits + '\'' +
+                ", rpm=" + rpm +
+                ", price=" + price +
+                ", priceUnits='" + priceUnits + '\'' +
+                '}';
     }
 }
