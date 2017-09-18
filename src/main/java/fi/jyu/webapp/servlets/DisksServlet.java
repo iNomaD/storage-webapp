@@ -5,6 +5,7 @@ import fi.jyu.soapservice.src.models.DiskModel;
 import fi.jyu.webapp.Processing;
 import fi.jyu.webapp.RequestProcessor;
 import fi.jyu.webapp.clients.CurrencyConvertorClient;
+import fi.jyu.webapp.clients.UnitConvertorClient;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,10 +41,11 @@ public class DisksServlet extends HttpServlet {
                 }
             }
             if(capacity != null && capacity.equalsIgnoreCase(Constants.capacityMB)){
-
+                UnitConvertorClient uclient = new UnitConvertorClient();
+                double mb = uclient.sendRequest(disk.getCapacity(), disk.getCapacityUnits(), Constants.capacityMB);
+                disk.setCapacity((int)mb);
+                disk.setCapacityUnits(Constants.capacityMB);
             }
-
-            System.out.println(disk);
         }
 
         String result = "<Result>";
