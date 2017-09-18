@@ -47,7 +47,6 @@ public class RequestProcessor {
                 LSSerializer lsSerializer = domImplementation.createLSSerializer();
                 String elementName = lsSerializer.writeToString(elementNode);
                 elementName = elementName.substring(40);
-                System.out.println(elementName);
                 result.add(DiskModel.fromXML(elementName));
             }
         }
