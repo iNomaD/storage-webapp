@@ -11,6 +11,8 @@ public class DiskModel {
     Integer price;
     String priceUnits;
 
+    public DiskModel(){}
+
     public DiskModel(Integer id, String vendor, String type, Integer capacity, String capacityUnits, Integer rpm, Integer price, String priceUnits) {
         this.id = id;
         this.vendor = vendor;
@@ -26,6 +28,12 @@ public class DiskModel {
         return ("<HD><ID>" + id + "</ID><Vendor>" + vendor + "</Vendor><Type>" + type +
                 "</Type><Capacity>" + capacity + "</Capacity><CapacityUnits>" + capacityUnits + "</CapacityUnits><Rpm>" +
                 rpm + "</Rpm><Price>" + price + "</Price><PriceUnits>" + priceUnits + "</PriceUnits></HD>");
+    }
+
+    public static DiskModel fromXML(String xmlData){
+        DiskModel disk = new DiskModel();
+
+        return disk;
     }
 
     public Integer getId() {
