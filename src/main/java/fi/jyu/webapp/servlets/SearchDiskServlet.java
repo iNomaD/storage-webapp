@@ -25,16 +25,16 @@ public class SearchDiskServlet extends HttpServlet {
         String idParameter = request.getParameter("id");
         Integer id = null;
         if(idParameter == null){
-            response.sendError(403);
             out.println("<Result>Provide id please</Result>");
+            return;
         }
         else{
             try {
                 id = Integer.valueOf(idParameter);
             }
             catch (Exception e){
-                response.sendError(403);
                 out.println("<Result>id should be integer</Result>");
+                return;
             }
         }
 
@@ -52,6 +52,7 @@ public class SearchDiskServlet extends HttpServlet {
 
         if(resultDisk == null){
             out.println("<Result>Disk"+id+" not found</Result>");
+            return;
         }
         else{
             if(price != null && price.equalsIgnoreCase(Constants.priceEUR)){

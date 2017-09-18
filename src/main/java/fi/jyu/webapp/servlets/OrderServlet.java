@@ -1,5 +1,7 @@
 package fi.jyu.webapp.servlets;
 
+import fi.jyu.soapservice.src.models.DiskModel;
+import fi.jyu.webapp.StorageResponseParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -19,6 +21,7 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 @WebServlet("/order")
 
@@ -29,67 +32,43 @@ public class OrderServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-        System.out.println("doPost");
-        PrintWriter OutResponse = response.getWriter();
+        PrintWriter outWriter = response.getWriter();
 
-        try {
-            int DiskId = Integer.parseInt(request.getParameter("diskId").toString());
-            String CustumerNumber = request.getParameter("customerNumber").toString();
-            String CustomerEmail = request.getParameter("customerEmail").toString();
+        String diskIdString = request.getParameter("diskId");
+        String customerName = request.getParameter("customerName");
+        String customerEmail = request.getParameter("customerEmail");
 
-            String OutPut = "Custumer Id is " + String.valueOf(DiskId)+ '\n' + "Custumer Number is " + CustumerNumber + '\n' + "Custumer Email is " + CustomerEmail +'\n' ;
-            System.out.println(OutPut);
+        //String OutPut = "Custumer Id is " + String.valueOf(diskIdString)+ '\n' + "Custumer Number is " + customerName + '\n' + "Custumer Email is " + customerEmail +'\n' ;
+        //System.out.println(OutPut);
 
-            String output = XMLBuilder("Pass");
-
-
-            System.out.println(output);
-            OutResponse.write(output);
-
-            //System.out.println(doc.toString());
-
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        Integer diskId = null;
+        if(diskIdString == null || customerName == null || customerEmail == null){
+            outWriter.println("<Result>Provide diskId, customerName, customerEmail please</Result>");
+            return;
+        }
+        else{
             try {
-                OutResponse.write(XMLBuilder("Fill all parameters"));
-            } catch (ParserConfigurationException e1) {
-                e1.printStackTrace();
-            } catch (TransformerException e1) {
-                e1.printStackTrace();
+                diskId = Integer.valueOf(diskIdString);
+            }
+            catch (Exception e){
+                outWriter.println("<Result>id should be integer</Result>");
+                return;
             }
         }
 
-
-
+        try {
+            List<DiskModel> data = StorageResponseParser.getStorageData();
+            for (DiskModel diskModel : data) {
+                if (diskModel.getId().equals(diskId)) {
+                    String decision = "<diskId>" + diskId + "</diskId><customerName>" + customerName + "</customerName><customerEmail>" + customerEmail + "</customerEmail>";
+                    outWriter.write("<result>"+decision+"</decision>");
+                    return;
+                }
+            }
+            String decision = "Disk" + diskId + " not found";
+            outWriter.write("<result>"+decision+"</decision>");
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
-
-    private String XMLBuilder(String Desition) throws ParserConfigurationException, TransformerException {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = null;
-
-        dBuilder = dbFactory.newDocumentBuilder();
-
-        Document doc = dBuilder.newDocument();
-        Element RootElement = doc.createElement("AnswerForm");
-        doc.appendChild(RootElement);
-
-        Element Answer = doc.createElement("Answer");
-        RootElement.appendChild(Answer);
-
-        Answer.appendChild(doc.createTextNode(Desition));
-
-        TransformerFactory tf = TransformerFactory.newInstance();
-
-        Transformer transformer = tf.newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        StringWriter writer = new StringWriter();
-        transformer.transform(new DOMSource(doc), new StreamResult(writer));
-        return writer.getBuffer().toString().replaceAll("\n|\r", "");
-    }
-
 }
