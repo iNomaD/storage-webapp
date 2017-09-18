@@ -1,6 +1,5 @@
 package fi.jyu.webapp.servlets;
 
-import fi.jyu.webapp.Processing;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

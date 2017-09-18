@@ -2,8 +2,7 @@ package fi.jyu.webapp.servlets;
 
 import fi.jyu.soapservice.src.models.Constants;
 import fi.jyu.soapservice.src.models.DiskModel;
-import fi.jyu.webapp.Processing;
-import fi.jyu.webapp.RequestProcessor;
+import fi.jyu.webapp.StorageResponseParser;
 import fi.jyu.webapp.clients.CurrencyConvertorClient;
 import fi.jyu.webapp.clients.UnitConvertorClient;
 
@@ -26,7 +25,7 @@ public class DisksServlet extends HttpServlet {
         String price = request.getParameter("price");
         String capacity = request.getParameter("capacity");
 
-        List<DiskModel> data = RequestProcessor.getStorageData();
+        List<DiskModel> data = StorageResponseParser.getStorageData();
         for(DiskModel disk : data){
             if(price != null && price.equalsIgnoreCase(Constants.priceEUR)){
                 CurrencyConvertorClient cclient = new CurrencyConvertorClient();

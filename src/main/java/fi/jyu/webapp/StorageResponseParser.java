@@ -16,7 +16,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestProcessor {
+public class StorageResponseParser {
     
     public static String getXmlData(){
         StorageClient storageClient = new StorageClient();
