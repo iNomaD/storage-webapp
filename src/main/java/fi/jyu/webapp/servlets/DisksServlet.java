@@ -18,10 +18,9 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 
-@WebServlet("/Disks")
+@WebServlet("/disks")
 public class DisksServlet extends HttpServlet {
 
-    private Processing processing = new Processing();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String price = request.getParameter("price");

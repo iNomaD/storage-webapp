@@ -21,13 +21,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-@WebServlet("/Order")
+@WebServlet("/order")
 
 public class OrderServlet extends HttpServlet {
-    private Processing processing = new Processing();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("This is Get!");
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{

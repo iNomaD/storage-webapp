@@ -43,8 +43,6 @@ public class DiskModel {
     }
 
     public static DiskModel fromXML(String xmlData){
-        System.out.println("DATA  "+xmlData);
-
         DiskModel disk = new DiskModel();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = null;
