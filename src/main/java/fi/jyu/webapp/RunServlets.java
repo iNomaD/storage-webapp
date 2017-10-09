@@ -21,7 +21,8 @@ public class RunServlets {
 
 
         //Create a new Server, add the handler to it and start
-        Server server = new Server(8080);
+        Integer port = Integer.valueOf(System.getenv("PORT"));
+        Server server = new Server(port);
         server.setHandler(handler);
         server.start();
 

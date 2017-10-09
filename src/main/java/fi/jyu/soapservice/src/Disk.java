@@ -3,7 +3,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
 
-@WebService(targetNamespace = "http://test")
+@WebService
 public class Disk {
   protected CSVReader reader = new CSVReader();;
 
@@ -21,7 +21,9 @@ public class Disk {
 
   public static void main(String[] args) {
     Object implementor = new Disk ();
-    String address = "http://localhost:9000/";
+    Integer port = Integer.valueOf(System.getenv("PORT"));
+    String address = "http://0.0.0.0:"+port+"/";
+    System.out.println(address);
     Endpoint.publish(address, implementor);
     System.out.println("Launched!");
 

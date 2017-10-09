@@ -30,7 +30,7 @@ public class DiskService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:9000/?wsdl");
+            url = new URL("http://webstorage-soap.herokuapp.com/?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
